@@ -1,4 +1,4 @@
-import { ARIO, Wayfinder, PriorityGatewayRouter } from '@ar.io/sdk'
+import { ARIO, Wayfinder, PriorityGatewayRouter, StaticGatewaysProvider, HashVerifier, TrustedGatewaysHashProvider } from '@ar.io/sdk'
 import axios from 'axios'
 
 // initialize ARIO client on mainnet
@@ -12,9 +12,16 @@ const priorityRouter = new PriorityGatewayRouter({
 })
 
 // set up a router that picks a random gateway each time
-export const wf = new Wayfinder({
+export const wayfinder = new Wayfinder({
     priorityRouter,
     // @ts-expect-error - axios is not typed
-     httpClient: axios
+     httpClient: fetch,
+     verifier: new HashVerifier({
+        trustedHashProvider: new TrustedGatewaysHashProvider({
+          gatewaysProvider: new StaticGatewaysProvider({
+            gateways: ['https://permagate.io'],
+          }),
+        }),
+      }),
     })
 

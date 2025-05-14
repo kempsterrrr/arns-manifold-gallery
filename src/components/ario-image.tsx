@@ -6,6 +6,12 @@ type ArioImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
 }
 
 export default function ArioImage({ src, alt, ...rest }: ArioImageProps) {
-  const url = useArUrl(src)
-  return <img src={url?.toString()} alt={alt} {...rest} />
+  const { url, verified } = useArUrl(src)
+  return (
+    <div>
+      <img src={url?.toString()} alt={alt} {...rest} />
+      {verified === true && <span title="Verified">✅</span>}
+      {verified === false && <span title="Verification failed">⚠️</span>} 
+    </div>
+  )
 }
