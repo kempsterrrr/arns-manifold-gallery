@@ -8,11 +8,40 @@ export function useArUrl(arLink: string) {
   useEffect(() => {
     let cancelled = false
 
-    const onPassed = () => setVerified(true)
-    const onFailed = () => setVerified(false)
+    const onPassed = () => {
+      setVerified(true)
+      console.log('verification-passed')
+    }
+    const onFailed = () => {
+      setVerified(false)
+      console.log('verification-failed')
+    }
 
+    // Store handlers so we can remove them
+    const handlers: Record<string, (event: unknown) => void> = {}
+
+    const eventNames = [
+      'verification-passed',
+      'verification-failed',
+      'verification-progress',
+      'routing-started',
+      'routing-succeeded',
+      'routing-failed',
+      'identified-transaction-id',
+      'verification-skipped'
+    ] as const;
+
+    wayfinder.emitter.setMaxListeners(Infinity)
     wayfinder.emitter.on('verification-passed', onPassed)
     wayfinder.emitter.on('verification-failed', onFailed)
+    eventNames.forEach(name => {
+      handlers[name] = (event) => {
+        console.log(`[wayfinder event] ${name}:`, event)
+      }
+      wayfinder.emitter.on(name, handlers[name])
+    })
+
+    console.log("Listeners registered for wayfinder events");
 
     wayfinder
       .resolveUrl({ originalUrl: arLink })
@@ -29,8 +58,12 @@ export function useArUrl(arLink: string) {
       cancelled = true
       wayfinder.emitter.off('verification-passed', onPassed)
       wayfinder.emitter.off('verification-failed', onFailed)
+      eventNames.forEach(name => {
+        wayfinder.emitter.off(name, handlers[name])
+      })
     }
   }, [arLink])
 
   return { url, verified }
 }
+
