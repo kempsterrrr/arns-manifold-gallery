@@ -1,5 +1,4 @@
 import { ARIO, Wayfinder, PriorityGatewayRouter, StaticGatewaysProvider, HashVerifier, TrustedGatewaysHashProvider } from '@ar.io/sdk'
-import axios from 'axios'
 
 // initialize ARIO client on mainnet
 const ario = ARIO.mainnet()
