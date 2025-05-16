@@ -1,5 +1,7 @@
-import { ARIO, Wayfinder, PriorityGatewayRouter, StaticGatewaysProvider, HashVerifier, TrustedGatewaysHashProvider } from '@ar.io/sdk'
+import { ARIO, Wayfinder, PriorityGatewayRouter, StaticGatewaysProvider, HashVerifier, TrustedGatewaysHashProvider, Logger } from '@ar.io/sdk'
 
+
+Logger.default.setLogLevel('debug')
 // initialize ARIO client on mainnet
 const ario = ARIO.mainnet()
 
@@ -17,9 +19,11 @@ export const wayfinder = new Wayfinder({
      httpClient: fetch,
      verifier: new HashVerifier({
         trustedHashProvider: new TrustedGatewaysHashProvider({
-          gatewaysProvider: new StaticGatewaysProvider({
-            gateways: ['https://permagate.io'],
-          }),
+            gatewaysProvider: new StaticGatewaysProvider({
+                gateways: [
+                    'https://permagate.io',
+                ],
+            }),
         }),
       }),
     })

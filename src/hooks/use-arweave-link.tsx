@@ -8,59 +8,32 @@ export function useArUrl(arLink: string) {
   useEffect(() => {
     let cancelled = false
 
-    const onPassed = () => {
-      setVerified(true)
-      console.log('verification-passed')
-    }
-    const onFailed = () => {
-      setVerified(false)
-      console.log('verification-failed')
-    }
+    const onPassed = () => setVerified(true)
+    const onFailed = () => setVerified(false)
 
-    // Store handlers so we can remove them
-    const handlers: Record<string, (event: unknown) => void> = {}
-
-    const eventNames = [
-      'verification-passed',
-      'verification-failed',
-      'verification-progress',
-      'routing-started',
-      'routing-succeeded',
-      'routing-failed',
-      'identified-transaction-id',
-      'verification-skipped'
-    ] as const;
-
-    wayfinder.emitter.setMaxListeners(Infinity)
     wayfinder.emitter.on('verification-passed', onPassed)
     wayfinder.emitter.on('verification-failed', onFailed)
-    eventNames.forEach(name => {
-      handlers[name] = (event) => {
-        console.log(`[wayfinder event] ${name}:`, event)
-      }
-      wayfinder.emitter.on(name, handlers[name])
-    })
 
-    console.log("Listeners registered for wayfinder events");
-
-    wayfinder
-      .resolveUrl({ originalUrl: arLink })
-      .then(u => {
-        if (!cancelled) {
-          setUrl(u)
-        }
-      })
-      .catch(err => {
-        console.error('Wayfinder failed to resolve', err)
-      })
+     wayfinder
+        .request(arLink, {
+          mode: 'cors',
+          redirect: 'follow',
+        })
+        .then(async (res) => {
+          if (!cancelled) {
+            // TODO: check content-type for image/html
+            setUrl(URL.createObjectURL(await res.blob()));
+          }
+        })
+        .catch(err => {
+          console.error('Wayfinder failed to resolve', err)
+        })
 
     return () => {
       cancelled = true
+      // consider revoking/removing the local blob - URL.revokeObjectURL(url);
       wayfinder.emitter.off('verification-passed', onPassed)
       wayfinder.emitter.off('verification-failed', onFailed)
-      eventNames.forEach(name => {
-        wayfinder.emitter.off(name, handlers[name])
-      })
     }
   }, [arLink])
 
