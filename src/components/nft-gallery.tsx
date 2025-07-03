@@ -91,7 +91,7 @@ function NFTDialog({ nft, open, onOpenChange }: { nft: NFT, open: boolean, onOpe
               <h4 className="text-sm font-medium mb-3">Info</h4>
               <div className="space-y-3 bg-muted/40 rounded-md p-3 md:p-4">
                 <div className="flex flex-col sm:flex-row sm:justify-between text-sm gap-1">
-                  <span className="text-muted-foreground text-xs sm:text-sm break-all">0x714a1a6ea4cb1d3f5199f51e813adf442aa8344f</span>
+                  <span className="text-muted-foreground text-xs sm:text-sm break-all">{import.meta.env.VITE_CONTRACT_ADDRESS}</span>
                   {/* <span className="font-medium">Contract</span> */}
                 </div>
                 <div className="flex justify-between text-sm">
@@ -136,13 +136,13 @@ function NFTDialog({ nft, open, onOpenChange }: { nft: NFT, open: boolean, onOpe
                 </Button>
               </div>
               <div className="flex justify-center space-x-6 items-center">
-                <a href={`https://opensea.io/item/base/0x714a1a6ea4cb1d3f5199f51e813adf442aa8344f/${nft.id}`} target="_blank" rel="noopener noreferrer" aria-label="OpenSea">
+                <a href={`https://opensea.io/item/base/${import.meta.env.VITE_CONTRACT_ADDRESS}/${nft.id}`} target="_blank" rel="noopener noreferrer" aria-label="OpenSea">
                   <img src={OpenseaLogo} alt="OpenSea Logo" className="h-6 w-auto" />
                 </a>
-                <a href={`https://magiceden.io/item-details/base/0x714a1a6ea4cb1d3f5199f51e813adf442aa8344f/${nft.id}`} target="_blank" rel="noopener noreferrer" aria-label="Magic Eden">
+                <a href={`https://magiceden.io/item-details/base/${import.meta.env.VITE_CONTRACT_ADDRESS}/${nft.id}`} target="_blank" rel="noopener noreferrer" aria-label="Magic Eden">
                   <img src={MagicEdenLogo} alt="Magic Eden Logo" className="h-6 w-auto" />
                 </a>
-                <a href={`https://rarible.com/token/base/0xcfef83a405bb87c0aa88a83497669e81d01d1051:${nft.id}`} target="_blank" rel="noopener noreferrer" aria-label="Rarible">
+                <a href={`https://rarible.com/token/base/${import.meta.env.VITE_CONTRACT_ADDRESS}:${nft.id}`} target="_blank" rel="noopener noreferrer" aria-label="Rarible">
                   <img src={RaribleLogo} alt="Rarible Logo" className="h-6 w-auto" />
                 </a>
               </div>

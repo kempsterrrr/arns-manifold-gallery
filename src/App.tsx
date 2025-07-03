@@ -73,25 +73,25 @@ function App() {
                     <span className="font-medium">{Object.keys(collectionMetadata).length}</span> works
                   </span>
                   <span className="flex items-center gap-1">
-                    <a href="https://basescan.org/address/0x714a1a6ea4cb1d3f5199f51e813adf442aa8344f" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+                    <a href={`https://basescan.org/address/${import.meta.env.VITE_CONTRACT_ADDRESS}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
                       <img src={BaseLogo} alt="Base Logo" className="h-4 w-4 mr-1" />
                       <span className="font-medium">Base</span>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6m5-3h3m0 0v3m0-3L10 14"/></svg>
                     </a>
                   </span>
                   {/* <span className="flex items-center gap-1">
-                    <span className="font-mono text-xs sm:text-sm break-all">0x714a1a6ea4cb1d3f5199f51e813adf442aa8344f</span>
+                    <span className="font-mono text-xs sm:text-sm break-all">{import.meta.env.VITE_CONTRACT_ADDRESS}</span>
                     <button
                       className="ml-1 p-1 hover:bg-muted rounded"
                       title="Copy address"
                       onClick={() => {
-                        navigator.clipboard.writeText('0x714a1a6ea4cb1d3f5199f51e813adf442aa8344f');
+                        navigator.clipboard.writeText(import.meta.env.VITE_CONTRACT_ADDRESS);
                       }}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="9" y="9" width="13" height="13" rx="2" strokeWidth="2"/><rect x="3" y="3" width="13" height="13" rx="2" strokeWidth="2"/></svg>
                     </button>
                     <a
-                      href="https://basescan.org/address/0x714a1a6ea4cb1d3f5199f51e813adf442aa8344f"
+                      href={`https://basescan.org/address/${import.meta.env.VITE_CONTRACT_ADDRESS}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="ml-1 p-1 hover:bg-muted rounded"
@@ -105,10 +105,10 @@ function App() {
                 First NFT from @anoncast_ on manifold.xyz for commemorating first anonymous NFT released!
                 </p>
                 <div className="flex items-center justify-center gap-4 pt-4">
-                  <a href="https://rarible.com/collection/base/0xcfef83a405bb87c0aa88a83497669e81d01d1051/items" target="_blank" rel="noopener noreferrer" aria-label="Rarible">
+                  <a href={`https://rarible.com/collection/base/${import.meta.env.VITE_CONTRACT_ADDRESS}/items`} target="_blank" rel="noopener noreferrer" aria-label="Rarible">
                     <img src={RaribleLogo} alt="Rarible Logo" className="h-12 w-auto" />
                   </a>
-                  <a href="https://magiceden.io/collections/base/0xcfef83a405bb87c0aa88a83497669e81d01d1051" target="_blank" rel="noopener noreferrer" aria-label="MagicEden">
+                  <a href={`https://magiceden.io/collections/base/${import.meta.env.VITE_CONTRACT_ADDRESS}`} target="_blank" rel="noopener noreferrer" aria-label="MagicEden">
                     <img src={MagicEdenLogo} alt="MagicEden Logo" className="h-12 w-auto" />
                   </a>
                   <a href="https://opensea.io/collection/anonworld" target="_blank" rel="noopener noreferrer" aria-label="OpenSea">
