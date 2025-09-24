@@ -4,13 +4,27 @@ import { ARIO } from '@ar.io/sdk';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { NFTGallery } from "@/components/nft-gallery"
 import collectionMetadata from "@/data/collection_metadata.json"  
-import OpenseaLogo from "/opensea-logo.svg"
 import RaribleLogo from "/rarible-logo.svg"
 import PoweredByARIO from "/powered-by-ario.svg"
 import MagicEdenLogo from "/magic-eden-logo.svg"
 import BaseLogo from "@/assets/base-logo.svg"
+import EthereumLogo from "@/assets/ethereum-logo.svg"
 
 function App() {
+  const getChainInfo = (chain: string) => {
+    const chainMap: Record<string, { logo: string; name: string; explorer: string }> = {
+      'base': { logo: BaseLogo, name: 'Base', explorer: 'basescan.org' },
+      'ethereum': { logo: EthereumLogo, name: 'Ethereum', explorer: 'etherscan.io' },
+      'optimism': { logo: EthereumLogo, name: 'Polygon', explorer: 'polygonscan.com' },
+      'shape': { logo: EthereumLogo, name: 'Arbitrum', explorer: 'arbiscan.io' },
+      'polygon': { logo: EthereumLogo, name: 'Optimism', explorer: 'optimistic.etherscan.io' },
+      'sepolia': { logo: EthereumLogo, name: 'Optimism', explorer: 'optimistic.etherscan.io' }
+    };
+    
+    return chainMap[chain] || chainMap['ethereum']; // fallback to ethereum
+  };
+
+  const chainInfo = getChainInfo(import.meta.env.VITE_CHAIN);
   
   return (
     <WayfinderProvider gatewaysProvider={new LocalStorageGatewaysProvider({ 
@@ -22,21 +36,11 @@ function App() {
          sortOrder: 'desc',
        }), 
      })}>
-    {/* <WayfinderProvider gatewaysProvider={new LocalStorageGatewaysProvider({ 
-      ttlSeconds: 3600,
-      gatewaysProvider: new NetworkGatewaysProvider({ 
-         ario: ARIO.mainnet(), 
-         limit: 3, // target the top 3 gateways
-         sortBy: 'operatorStake',
-         sortOrder: 'desc',
-       }), 
-     })}> */}
      <HelmetProvider>
       <Helmet>
         <title>Anoncast X Manifold - Hosted on ArNS</title>
-        <meta name="description" content="First NFT from @anoncast_ on manifold.xyz for commemorating first anonymous NFT released!" />
-        <meta name="keywords" content="Anoncast, Manifold, NFT, Anonymous, First NFT" />
-        <meta name="author" content="Anoncast" />
+        <meta name="description" content={collectionMetadata[1].description} />
+        <meta name="author" content={collectionMetadata[1].created_by} />
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="#000000" />
@@ -45,51 +49,33 @@ function App() {
         <meta name="og:image" content="https://hio4ba6do34s7f4xmaffjf5tsergykh3gszg45r5vbjf5qzecbbq.arweave.net/Oh3Ag8N2-S-Xl2AKVJezkSJsKPs0sm52PahSXsMkEEM" />
       </Helmet>
         <div className="min-h-screen">
-          {/* <header className="sticky top-0 z-10 border-b bg-background/80 backdrop-blur-sm">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between py-4">
-              <a href="/" className="flex items-center space-x-2">
-                <span className="text-xl font-bold tracking-tighter">{collectionMetadata[1].created_by}</span>
-              </a>
-              <div className="flex items-center gap-4">
-                <a href="https://manifold.xyz/" target="_blank" rel="noopener noreferrer" aria-label="Manifold">
-                  <img src={ManifoldLogo} alt="Manifold Logo" className="h-8 w-auto rounded" />
-                </a>
-                <a href="https://anoncast.org/" target="_blank" rel="noopener noreferrer" aria-label="Manifold">
-                  <img src={AnoncastLogo} alt="Manifold Logo" className="h-8 w-auto rounded" />
-                </a>
-              </div>
-            </div>
-          </header> */}
           <main className="flex-1">
             <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24 lg:py-32">
               <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
                 <h1 className="text-3xl font-bold leading-tight tracking-tighter md:text-5xl lg:text-6xl lg:leading-[1.1]">
-                  Anoncast X Manifold
+                  {collectionMetadata[1].created_by}
                 </h1>
                 <div className="flex flex-wrap items-center justify-center gap-4 text-sm py-2">
                   <span className="flex items-center gap-1">
                     <span className="font-medium">{Object.keys(collectionMetadata).length}</span> works
                   </span>
                   <span className="flex items-center gap-1">
-                    <a href={`https://basescan.org/address/${import.meta.env.VITE_CONTRACT_ADDRESS}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
-                      <img src={BaseLogo} alt="Base Logo" className="h-4 w-4 mr-1" />
-                      <span className="font-medium">Base</span>
+                    <a href={`https://${chainInfo.explorer}/address/${import.meta.env.VITE_CONTRACT_ADDRESS}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+                      <img src={chainInfo.logo} alt={`${chainInfo.name} Logo`} className="h-4 w-4 mr-1" />
+                      <span className="font-medium">{chainInfo.name}</span>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6m5-3h3m0 0v3m0-3L10 14"/></svg>
                     </a>
                   </span>
                 </div>
                 <p className="max-w-[46rem] text-lg text-muted-foreground sm:text-xl">
-                First NFT from @anoncast_ on manifold.xyz for commemorating first anonymous NFT released!
+                {collectionMetadata[1].description}
                 </p>
                 <div className="flex items-center justify-center gap-4 pt-4">
-                  <a href={`https://rarible.com/collection/base/${import.meta.env.VITE_CONTRACT_ADDRESS}/items`} target="_blank" rel="noopener noreferrer" aria-label="Rarible">
+                  <a href={`https://rarible.com/collection/${import.meta.env.VITE_CHAIN}/${import.meta.env.VITE_CONTRACT_ADDRESS}/items`} target="_blank" rel="noopener noreferrer" aria-label="Rarible">
                     <img src={RaribleLogo} alt="Rarible Logo" className="h-12 w-auto" />
                   </a>
-                  <a href={`https://magiceden.io/collections/base/${import.meta.env.VITE_CONTRACT_ADDRESS}`} target="_blank" rel="noopener noreferrer" aria-label="MagicEden">
+                  <a href={`https://magiceden.io/collections/${import.meta.env.VITE_CHAIN}/${import.meta.env.VITE_CONTRACT_ADDRESS}`} target="_blank" rel="noopener noreferrer" aria-label="MagicEden">
                     <img src={MagicEdenLogo} alt="MagicEden Logo" className="h-12 w-auto" />
-                  </a>
-                  <a href="https://opensea.io/collection/anonworld" target="_blank" rel="noopener noreferrer" aria-label="OpenSea">
-                    <img src={OpenseaLogo} alt="OpenSea Logo" className="h-12 w-auto rounded" />
                   </a>
                 </div>
               </div>
