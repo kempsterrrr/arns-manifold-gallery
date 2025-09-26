@@ -1,0 +1,49 @@
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
+import { Button } from "@/components/ui/button"
+import { ArrowLeft } from "lucide-react"
+import { NFTGallery } from "@/components/nft-gallery"
+import collectionMetadata from "@/data/collection_metadata.json"
+import PoweredByARIO from "/powered-by-ario.svg"
+
+export function GalleryPage() {
+  return (
+    <div className="min-h-screen">
+      <Helmet>
+        <title>Gallery - Anoncast X Manifold</title>
+        <meta name="description" content={`Browse ${Object.keys(collectionMetadata).length} works by ${collectionMetadata[1].created_by}`} />
+      </Helmet>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <Button variant="ghost" asChild className="mb-6">
+          <Link to="/">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Home
+          </Link>
+        </Button>
+
+        <div className="text-center mb-8">
+          <h1 className="text-2xl md:text-3xl font-bold mb-2">Gallery</h1>
+          <p className="text-muted-foreground">
+            {Object.keys(collectionMetadata).length} works by {collectionMetadata[1].created_by}
+          </p>
+        </div>
+
+        <NFTGallery />
+      </div>
+
+      <footer className="border-t py-6 md:py-0 mt-12">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
+          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+            <a href="https://manifold.xyz" className="font-medium underline underline-offset-4 hover:text-foreground">
+              Manifold
+            </a>
+          </div>
+          <a href="https://ar.io" target="_blank" rel="noopener noreferrer" className="text-center text-sm leading-loose text-muted-foreground md:text-left">
+            <img src={PoweredByARIO} alt="Powered by AR.IO Network" className="h-12 w-auto" />
+          </a>
+        </div>
+      </footer>
+    </div>
+  )
+}
