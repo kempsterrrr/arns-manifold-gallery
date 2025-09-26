@@ -59,12 +59,12 @@ export function NFTDetailPage() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-black text-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Button
           variant="ghost"
           onClick={() => navigate("/gallery")}
-          className="mb-6"
+          className="mb-6 text-white hover:text-gray-300 hover:bg-gray-800"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Gallery
@@ -72,7 +72,7 @@ export function NFTDetailPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Image section */}
-          <div className="aspect-square bg-black rounded-lg overflow-hidden">
+          <div className="aspect-square bg-gray-900 rounded-lg overflow-hidden">
             <WayfinerImage
               src={nft.image_url.replace(/https:\/\/arweave\.net\//g, '')}
               alt={nft.name}
@@ -84,87 +84,65 @@ export function NFTDetailPage() {
           <div className="flex flex-col space-y-6">
             {/* Header */}
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-2">{nft.name}</h1>
-              <div className="text-xl font-medium text-muted-foreground mb-4">by {nft.created_by}</div>
-              <hr className="my-4" />
+              <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-2 text-white">{nft.name}</h1>
+              <div className="text-xl font-medium text-gray-400 mb-4">by {nft.created_by}</div>
             </div>
 
             {/* About section */}
             <div>
-              <h4 className="text-lg font-medium mb-3">About this artwork</h4>
-              <p className="text-muted-foreground leading-relaxed">
+              <h4 className="text-lg font-medium mb-3 text-white">About this artwork</h4>
+              <p className="text-gray-300 leading-relaxed">
                 {nft.description}
               </p>
             </div>
 
-            {/* Artwork Details */}
+            {/* Info section */}
             <div>
-              <h4 className="text-lg font-medium mb-3">Info</h4>
-              <div className="space-y-4 bg-muted/40 rounded-md p-4">
-                <div className="flex flex-col sm:flex-row sm:justify-between text-sm gap-1">
-                  <span className="text-muted-foreground">Contract</span>
-                  <span className="font-medium break-all">{import.meta.env.VITE_CONTRACT_ADDRESS}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Chain</span>
-                  <span className="font-medium">Base</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Token ID</span>
-                  <span className="font-medium">{`#${nft.id}`}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Token Standard</span>
-                  <span className="font-medium">ERC-721</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Dimensions</span>
-                  <span className="font-medium">{nft.image_details.width} × {nft.image_details.height}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Artwork Attributes */}
-            <div>
-              <h4 className="text-lg font-medium mb-3">Attributes</h4>
-              <div className="space-y-4 bg-muted/40 rounded-md p-4">
-                {nft.attributes.map((attribute, index) => (
-                  <div key={index} className="flex flex-col sm:flex-row sm:justify-between text-sm gap-1">
-                    <span className="text-muted-foreground break-words">{attribute.trait_type}</span>
-                    <span className="font-medium break-words">{attribute.value}</span>
-                  </div>
-                ))}
+              <h4 className="text-lg font-medium mb-3 text-white">Info</h4>
+              <div className="grid grid-cols-1 gap-2 text-sm">
+                <div className="text-gray-400 break-all">{import.meta.env.VITE_CONTRACT_ADDRESS}</div>
+                <div className="text-gray-400">Base</div>
+                <div className="text-gray-400">{`#${nft.id}`}</div>
+                <div className="text-gray-400">ERC-721</div>
+                <div className="text-gray-400">{nft.image_details.width} × {nft.image_details.height}</div>
               </div>
             </div>
 
             {/* Perma Link */}
-            <div>
-              <h4 className="text-lg font-medium mb-3">Permanent Link</h4>
-              <div className="flex justify-center mb-6">
-                <Button asChild size="lg">
-                  <a href={`/${nft.id}`} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="mr-2 h-4 w-4" />
-                    Perma Link
-                  </a>
-                </Button>
-              </div>
+            <div className="flex gap-3">
+              <Button asChild className="bg-white text-black hover:bg-gray-200">
+                <a href={`/${nft.id}`} target="_blank" rel="noopener noreferrer">
+                  Perma Link
+                  <ExternalLink className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+              <a href={`https://opensea.io/item/base/${import.meta.env.VITE_CONTRACT_ADDRESS}/${nft.id}`} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-blue-600 rounded flex items-center justify-center hover:bg-blue-700">
+                <img src={OpenseaLogo} alt="OpenSea" className="h-6 w-6" />
+              </a>
+              <a href={`https://magiceden.io/item-details/base/${import.meta.env.VITE_CONTRACT_ADDRESS}/${nft.id}`} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-purple-600 rounded flex items-center justify-center hover:bg-purple-700">
+                <img src={MagicEdenLogo} alt="Magic Eden" className="h-6 w-6" />
+              </a>
+              <a href={`https://rarible.com/token/base/${import.meta.env.VITE_CONTRACT_ADDRESS}:${nft.id}`} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-yellow-600 rounded flex items-center justify-center hover:bg-yellow-700">
+                <img src={RaribleLogo} alt="Rarible" className="h-6 w-6" />
+              </a>
             </div>
+          </div>
+        </div>
 
-            {/* Marketplace Links */}
-            <div>
-              <h4 className="text-lg font-medium mb-3">View on Marketplaces</h4>
-              <div className="flex justify-center space-x-8 items-center">
-                <a href={`https://opensea.io/item/base/${import.meta.env.VITE_CONTRACT_ADDRESS}/${nft.id}`} target="_blank" rel="noopener noreferrer" aria-label="OpenSea">
-                  <img src={OpenseaLogo} alt="OpenSea Logo" className="h-8 w-auto hover:opacity-80 transition-opacity" />
-                </a>
-                <a href={`https://magiceden.io/item-details/base/${import.meta.env.VITE_CONTRACT_ADDRESS}/${nft.id}`} target="_blank" rel="noopener noreferrer" aria-label="Magic Eden">
-                  <img src={MagicEdenLogo} alt="Magic Eden Logo" className="h-8 w-auto hover:opacity-80 transition-opacity" />
-                </a>
-                <a href={`https://rarible.com/token/base/${import.meta.env.VITE_CONTRACT_ADDRESS}:${nft.id}`} target="_blank" rel="noopener noreferrer" aria-label="Rarible">
-                  <img src={RaribleLogo} alt="Rarible Logo" className="h-8 w-auto hover:opacity-80 transition-opacity" />
-                </a>
+        {/* Attributes section - full width below */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold mb-6 text-white">Attributes</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+            {nft.attributes.map((attribute, index) => (
+              <div key={index} className="bg-gray-800 rounded-lg p-4">
+                <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">
+                  {attribute.trait_type}
+                </div>
+                <div className="text-white font-medium">
+                  {attribute.value}
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

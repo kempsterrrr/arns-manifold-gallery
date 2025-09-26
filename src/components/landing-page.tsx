@@ -59,13 +59,6 @@ export function LandingPage() {
             <p className="max-w-[46rem] text-lg text-muted-foreground sm:text-xl">
               {collectionMetadata[1].description}
             </p>
-            <div className="flex items-center justify-center gap-4 pt-6">
-              <Button asChild size="lg">
-                <Link to="/gallery">
-                  View Gallery
-                </Link>
-              </Button>
-            </div>
             <div className="flex items-center justify-center gap-4 pt-4">
               <a href={`https://rarible.com/collection/${import.meta.env.VITE_CHAIN}/${import.meta.env.VITE_CONTRACT_ADDRESS}/items`} target="_blank" rel="noopener noreferrer" aria-label="Rarible">
                 <img src={RaribleLogo} alt="Rarible Logo" className="h-12 w-auto hover:opacity-80 transition-opacity" />
@@ -73,6 +66,13 @@ export function LandingPage() {
               <a href={`https://magiceden.io/collections/${import.meta.env.VITE_CHAIN}/${import.meta.env.VITE_CONTRACT_ADDRESS}`} target="_blank" rel="noopener noreferrer" aria-label="MagicEden">
                 <img src={MagicEdenLogo} alt="MagicEden Logo" className="h-12 w-auto hover:opacity-80 transition-opacity" />
               </a>
+            </div>
+            <div className="flex items-center justify-center gap-4 pt-6">
+              <Button asChild size="lg">
+                <Link to="/gallery">
+                  View Gallery
+                </Link>
+              </Button>
             </div>
           </div>
         </section>
