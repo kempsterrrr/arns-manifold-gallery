@@ -24,7 +24,7 @@ The application uses AR.IO's Wayfinder protocol for decentralized Arweave conten
 ### Core Components
 - `App.tsx`: Main application with WayfinderProvider setup and collection overview
 - `NFTGallery`: Grid display of NFTs with modal dialogs
-- `WayfinerImage`: Custom image component for Arweave content with fallbacks
+- `WayfinderImage`: Custom image component for Arweave content with fallbacks
 - `WayfinderLink`: Custom link component for ArNS subdomains
 
 ## Essential Commands
@@ -33,16 +33,17 @@ The application uses AR.IO's Wayfinder protocol for decentralized Arweave conten
 ```bash
 pnpm install          # Install dependencies
 pnpm run dev          # Start development server (http://localhost:5173)
-pnpm run build        # Build for production
+pnpm run build        # Build for production (includes TypeScript compilation)
 pnpm run preview      # Preview production build
 pnpm run lint         # Run ESLint
 ```
 
 ### Collection Setup
 ```bash
-pnpm run get-metadata              # Fetch NFT metadata from blockchain
-pnpm run create-and-assign-undernames  # Create ArNS subdomains for each NFT
+pnpm run get-metadata # Fetch NFT metadata from blockchain
 ```
+
+Note: ArNS subdomain creation is handled manually through AR.IO tools, not via an npm script.
 
 ### Deployment
 ```bash
@@ -55,7 +56,7 @@ DEPLOY_KEY=$(base64 -i wallet.json) npx permaweb-deploy --arns-name [your-arns-n
 
 Required in `.env`:
 - `ARNS_NAME`: Your ArNS domain name (e.g., "mygallery")
-- `DEPLOY_KEY`: Base64-encoded Arweave wallet JSON
+- `DEPLOY_KEY`: Base64-encoded Arweave wallet JSON (see AR.IO permaweb-deploy docs)
 - `ETH_NODE_URL`: RPC URL for the blockchain network (typically Ethereum/Base)
 - `CONTRACT_ADDRESS`: Manifold collection contract address
 

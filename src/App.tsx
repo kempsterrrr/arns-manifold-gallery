@@ -5,7 +5,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { LandingPage } from "@/components/landing-page"
 import { GalleryPage } from "@/components/home-page"
-import { NFTDetailPage } from "@/components/nft-detail-page"
+import NFTDetailPage from "@/components/nft-detail-page"
 import { ArweaveRedirect } from "@/components/arweave-redirect"
 
 function App() {
