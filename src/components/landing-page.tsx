@@ -26,7 +26,7 @@ export function LandingPage() {
   const chainInfo = getChainInfo(import.meta.env.VITE_CHAIN);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Helmet>
         <title>Anoncast X Manifold - Hosted on ArNS</title>
         <meta name="description" content={collectionMetadata[1].description} />
@@ -39,25 +39,25 @@ export function LandingPage() {
         <meta name="og:image" content="https://hio4ba6do34s7f4xmaffjf5tsergykh3gszg45r5vbjf5qzecbbq.arweave.net/Oh3Ag8N2-S-Xl2AKVJezkSJsKPs0sm52PahSXsMkEEM" />
       </Helmet>
 
-      <main className="flex-1">
-        <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24 lg:py-32">
-          <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-6 text-center">
-            <h1 className="text-3xl font-bold leading-tight tracking-tighter md:text-5xl lg:text-6xl lg:leading-[1.1]">
+      <main className="flex-1 flex items-center justify-center">
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
+          <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 sm:gap-6 text-center">
+            <h1 className="text-2xl font-bold leading-tight tracking-tighter sm:text-3xl md:text-5xl lg:text-6xl lg:leading-[1.1]">
               {collectionMetadata[1].created_by}
             </h1>
-            <div className="flex flex-wrap items-center justify-center gap-4 text-sm py-2">
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs sm:text-sm py-2">
               <span className="flex items-center gap-1">
                 <span className="font-medium">{Object.keys(collectionMetadata).length}</span> works
               </span>
               <span className="flex items-center gap-1">
                 <a href={`https://${chainInfo.explorer}/address/${import.meta.env.VITE_CONTRACT_ADDRESS}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
-                  <img src={chainInfo.logo} alt={`${chainInfo.name} Logo`} className="h-4 w-4 mr-1" />
+                  <img src={chainInfo.logo} alt={`${chainInfo.name} Logo`} className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
                   <span className="font-medium">{chainInfo.name}</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6m5-3h3m0 0v3m0-3L10 14"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6m5-3h3m0 0v3m0-3L10 14"/></svg>
                 </a>
               </span>
             </div>
-            
+
             {/* <p className="max-w-[46rem] text-lg text-muted-foreground sm:text-xl">
               {collectionMetadata[1].description}
             </p> */}
@@ -71,9 +71,9 @@ export function LandingPage() {
                 <img src={MagicEdenLogo} alt="MagicEden Logo" className="h-12 w-auto hover:opacity-80 transition-opacity" />
               </a>
             </div> */}
-            <div className="flex items-center justify-center gap-4 pt-6">
+            <div className="flex items-center justify-center gap-4 pt-4 sm:pt-6">
             <Link to="/gallery">
-                <button className="font-mono text-sm bg-black text-white border-2 border-white px-6 py-3 hover:bg-white hover:text-black transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black">
+                <button className="font-mono text-xs sm:text-sm bg-black text-white border-2 border-white px-4 py-2 sm:px-6 sm:py-3 hover:bg-white hover:text-black transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black">
                   <pre className="whitespace-pre">
 {`┌─────────────┐
 │    ENTER    │
@@ -85,7 +85,7 @@ export function LandingPage() {
           </div>
         </section>
       </main>
-      <footer className="border-t py-6 md:py-0">
+      <footer className="mt-auto border-t py-6 md:py-0">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
             <a href="https://manifold.xyz" className="font-medium underline underline-offset-4 hover:text-foreground">

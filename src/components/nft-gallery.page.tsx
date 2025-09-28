@@ -15,12 +15,14 @@ export function GalleryPage() {
       </Helmet>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Button variant="ghost" asChild className="mb-6">
-          <Link to="/">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Home
-          </Link>
-        </Button>
+        <div className="mb-6">
+          <Button variant="outline" asChild>
+            <Link to="/">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Home
+            </Link>
+          </Button>
+        </div>
 
         <div className="text-center mb-8">
           <h1 className="text-2xl md:text-3xl font-bold mb-2">Gallery</h1>
