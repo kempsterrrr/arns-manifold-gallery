@@ -9,6 +9,9 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "get-metadata": "node src/scripts/get-metadata.js",
+    "extract-ascii": "node src/scripts/extract-ascii-art.js",
+    "extract-ascii-simple": "node src/scripts/extract-ascii-art-simple.js",
+    "extract-ascii-simple:demo": "node src/scripts/extract-ascii-art-simple.js --demo",
     "deploy:arns": "permaweb-deploy --arns-name $ARNS_NAME --deploy_key $DEPLOY_KEY"
   },
   "dependencies": {

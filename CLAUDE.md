@@ -40,7 +40,9 @@ pnpm run lint         # Run ESLint
 
 ### Collection Setup
 ```bash
-pnpm run get-metadata # Fetch NFT metadata from blockchain
+pnpm run get-metadata        # Fetch NFT metadata from blockchain
+pnpm run extract-ascii       # Extract ASCII art from contract source and add to gallery
+pnpm run extract-ascii:demo  # Test ASCII art extraction with demo content
 ```
 
 Note: ArNS subdomain creation is handled manually through AR.IO tools, not via an npm script.
@@ -60,6 +62,9 @@ Required in `.env`:
 - `ETH_NODE_URL`: RPC URL for the blockchain network (typically Ethereum/Base)
 - `CONTRACT_ADDRESS`: Manifold collection contract address
 
+Optional (for ASCII art extraction):
+- `ETHERSCAN_API_KEY`: For contract source fetching across all supported chains (Ethereum, Base, Polygon, Optimism, Arbitrum, etc.)
+
 Build-time variables (prefixed with `VITE_`):
 - `VITE_CONTRACT_ADDRESS`: Used in frontend for contract links
 - `VITE_CHAIN`: Chain identifier for marketplace links
@@ -69,7 +74,8 @@ Build-time variables (prefixed with `VITE_`):
 - `src/scripts/`: Node.js scripts for blockchain data fetching and ArNS management
 - `src/components/`: React components including UI components from shadcn/ui
 - `src/data/`: Generated collection metadata JSON file
-- `src/assets/`: Static assets including chain and marketplace logos
+- `src/assets/`: Static assets including chain and marketplace logos, and extracted ASCII art
+  - `contract-ascii-art.txt`: ASCII art extracted from contract source code
 - `wallet.json`: Arweave wallet file (not in git, required for ArNS operations)
 
 ## Key Dependencies
