@@ -188,69 +188,75 @@ function updateLandingPageWithAsciiArt(asciiArt) {
 
   let content = fs.readFileSync(landingPagePath, 'utf8');
 
-  // Format ASCII art for JSX
+  // Format ASCII art for JSX - ensure it's a single-line string
   const formattedArt = asciiArt
-    .replace(/\\/g, '\\\\')  // Escape backslashes
-    .replace(/`/g, '\\`')    // Escape backticks
-    .replace(/\$/g, '\\$');  // Escape dollar signs
+    .replace(/\\/g, '\\\\')     // Escape backslashes first
+    .replace(/"/g, '\\"')       // Escape quotes
+    .replace(/`/g, '\\`')       // Escape backticks
+    .replace(/\$/g, '\\$')      // Escape dollar signs
+    .replace(/\r?\n/g, '\\n');  // Replace actual newlines with \n escape sequence
 
-  let existingPreClasses = 'text-[4px] xs:text-[5px] sm:text-[6px] md:text-[4px] lg:text-[5px] xl:text-[6px] font-mono text-white whitespace-pre leading-[0.8] overflow-hidden max-w-full max-h-[400px] inline-block mx-auto';
+  // Check if using AsciiArtDisplay component
+  if (content.includes('<AsciiArtDisplay')) {
+    // Find the start of the asciiArt prop
+    const startPattern = '<AsciiArtDisplay asciiArt=';
+    const startIndex = content.indexOf(startPattern);
 
-  // Check if ASCII art already exists and extract existing styling
-  if (content.includes('ASCII Art from Contract')) {
+    if (startIndex !== -1) {
+      // Find the end of the prop value (looking for } />)
+      const valueStart = startIndex + startPattern.length;
+      let endIndex = content.indexOf('} />', valueStart);
+
+      if (endIndex !== -1) {
+        // Replace the entire asciiArt value
+        endIndex += 1; // Include the closing brace
+        content = content.slice(0, valueStart) + '{"' + formattedArt + '"}' + content.slice(endIndex);
+        console.log('✅ Updated AsciiArtDisplay component with new ASCII art');
+      }
+    }
+  } else if (content.includes('ASCII Art from Contract')) {
+    // Legacy update method for old format
     const startMarker = '{/* ASCII Art from Contract */}';
     const startIndex = content.indexOf(startMarker);
 
     if (startIndex !== -1) {
-      // Extract existing <pre> className
-      const preMatch = content.slice(startIndex).match(/<pre className="([^"]+)"/);
-      if (preMatch) {
-        existingPreClasses = preMatch[1];
-        console.log(`📎 Preserving existing styling: ${existingPreClasses}`);
-      }
-
-      // Find the end of the ASCII art div
-      let bracketCount = 0;
+      // Find the end of the ASCII art section (could be div or AsciiArtDisplay)
       let endIndex = startIndex;
-      let foundStart = false;
 
-      for (let i = startIndex; i < content.length; i++) {
-        if (content.substring(i, i + 5) === '<div ') {
-          bracketCount++;
-          foundStart = true;
-        } else if (content.substring(i, i + 6) === '</div>') {
-          bracketCount--;
-          if (foundStart && bracketCount === 0) {
-            endIndex = i + 6;
-            break;
-          }
-        }
+      // Look for either closing </div> or /> for self-closing component
+      const divEnd = content.indexOf('</div>', startIndex);
+      const selfCloseEnd = content.indexOf('/>', startIndex);
+
+      if (selfCloseEnd !== -1 && (divEnd === -1 || selfCloseEnd < divEnd)) {
+        endIndex = selfCloseEnd + 2;
+      } else if (divEnd !== -1) {
+        endIndex = divEnd + 6;
       }
 
+      // Use AsciiArtDisplay component for new ASCII art
       const asciiComponent = `            {/* ASCII Art from Contract */}
-            <div className="mb-8">
-              <pre className="${existingPreClasses}">
-                {${JSON.stringify(formattedArt)}}
-              </pre>
-            </div>`;
+            <AsciiArtDisplay asciiArt="${formattedArt}" />`;
 
       content = content.slice(0, startIndex) + asciiComponent + content.slice(endIndex);
     }
   } else {
-    // Insert new ASCII art before marketplace links
+    // Insert new ASCII art using AsciiArtDisplay component
     const asciiComponent = `            {/* ASCII Art from Contract */}
-            <div className="mb-8">
-              <pre className="${existingPreClasses}">
-                {${JSON.stringify(formattedArt)}}
-              </pre>
-            </div>`;
+            <AsciiArtDisplay asciiArt="${formattedArt}" />`;
 
-    const insertionPoint = content.indexOf('<div className="flex items-center justify-center gap-4 pt-4">');
+    const insertionPoint = content.indexOf('<div className="flex items-center justify-center gap-4">');
     if (insertionPoint !== -1) {
       content = content.slice(0, insertionPoint) + asciiComponent + '\n            ' + content.slice(insertionPoint);
     } else {
       throw new Error('Could not find insertion point in landing-page.tsx');
     }
+  }
+
+  // Ensure import is present
+  if (!content.includes('import { AsciiArtDisplay }')) {
+    const lastImportIndex = content.lastIndexOf('import ');
+    const endOfLastImport = content.indexOf('\n', lastImportIndex);
+    content = content.slice(0, endOfLastImport) + '\nimport { AsciiArtDisplay } from "@/components/ascii-art-display"' + content.slice(endOfLastImport);
   }
 
   fs.writeFileSync(landingPagePath, content);
