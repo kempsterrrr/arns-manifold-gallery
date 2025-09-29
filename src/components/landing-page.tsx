@@ -1,10 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Button } from "@/components/ui/button"
 import collectionMetadata from "@/data/collection_metadata.json"
-import RaribleLogo from "/rarible-logo.svg"
 import PoweredByARIO from "/powered-by-ario.svg"
-import MagicEdenLogo from "/magic-eden-logo.svg"
 import BaseLogo from "@/assets/base-logo.svg"
 import EthereumLogo from "@/assets/ethereum-logo.svg"
 import { AsciiArtDisplay } from "@/components/ascii-art-display"

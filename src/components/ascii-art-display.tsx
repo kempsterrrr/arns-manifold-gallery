@@ -6,7 +6,6 @@ export function AsciiArtDisplay({ asciiArt }: AsciiArtDisplayProps) {
   // Analyze ASCII art dimensions
   const lines = asciiArt.split('\n');
   const maxWidth = Math.max(...lines.map(line => line.length));
-  const lineCount = lines.length;
 
   // Check for Unicode block characters (complex art)
   const hasComplexChars = /[█▌▐▀▄▒░]/.test(asciiArt);
