@@ -138,11 +138,11 @@ pnpm install
 Create a `.env` file in the root directory with the following variables:
 
 ```bash
-# Ethereum RPC URL for fetching NFT metadata
+# RPC URL for fetching NFT metadata, should be specific to the chain your NFT collection was created on
 RPC_URL=https://your-ethereum-rpc-url
 
-# Your Manifold NFT contract address
-CONTRACT_ADDRESS=0x...
+# Your Manifold NFT contract address (prefixed with VITE_ for frontend access)
+VITE_CONTRACT_ADDRESS=0x...
 
 # Your ArNS domain name (e.g., mygallery.ar)
 ARNS_NAME=your-arns-name

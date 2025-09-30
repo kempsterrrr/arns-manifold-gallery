@@ -28,7 +28,7 @@ jobs:
         run: pnpm run deploy:arns --arns_name ${{ secrets.ARNS_NAME }} --deploy_key ${{ secrets.DEPLOY_KEY }}
         env:
           RPC_URL: ${{ secrets.RPC_URL }}
-          CONTRACT_ADDRESS: ${{ secrets.CONTRACT_ADDRESS }}
+          VITE_CONTRACT_ADDRESS: ${{ secrets.VITE_CONTRACT_ADDRESS }}
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
           ARNS_NAME: ${{ secrets.ARNS_NAME }}
           WALLET_JSON: ${{ secrets.WALLET_JSON }}

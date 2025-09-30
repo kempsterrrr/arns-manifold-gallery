@@ -1,17 +1,17 @@
 import fs from 'fs';
 import axios from 'axios';
 import path from 'path';
-import dotenv from 'dotenv';
+import { loadEnv } from 'vite';
 
-// Load environment variables
-dotenv.config();
+// Load environment variables using Vite's loadEnv
+const env = loadEnv('production', process.cwd(), '');
 
-const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
-const CHAIN = process.env.VITE_CHAIN || 'ethereum';
+const CONTRACT_ADDRESS = env.VITE_CONTRACT_ADDRESS;
+const CHAIN = env.VITE_CHAIN || 'ethereum';
 
 // Validate required environment variables
 if (!CONTRACT_ADDRESS) {
-  console.error('Error: Missing CONTRACT_ADDRESS in .env file.');
+  console.error('Error: Missing VITE_CONTRACT_ADDRESS in .env file.');
   process.exit(1);
 }
 
@@ -40,7 +40,7 @@ function getChainId(chain) {
 
 async function fetchContractSource(contractAddress, chain) {
   const chainId = getChainId(chain);
-  const apiKey = process.env.ETHERSCAN_API_KEY || 'YourApiKeyToken';
+  const apiKey = env.ETHERSCAN_API_KEY || 'YourApiKeyToken';
 
   try {
     console.log(`🔍 Fetching contract source code from ${chain}...`);

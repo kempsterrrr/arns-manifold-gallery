@@ -3,19 +3,20 @@ import axios from 'axios';
 import { createPublicClient, http } from 'viem';
 import { mainnet } from 'viem/chains';
 import path from 'path';
-import dotenv from 'dotenv';
+import { loadEnv } from 'vite';
 
-// Load environment variables
-dotenv.config();
+// Load environment variables using Vite's loadEnv
+const env = loadEnv('production', process.cwd(), '');
 
-const RPC_URL = process.env.RPC_URL;
-const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
+const RPC_URL = env.RPC_URL || env.ETH_NODE_URL;
+const CONTRACT_ADDRESS = env.VITE_CONTRACT_ADDRESS;
 const DATA_DIR = path.join(process.cwd(), 'src', 'data');
 const OUTPUT_FILE = path.join(DATA_DIR, "collection_metadata.json");
 
 // Validate required environment variables
 if (!RPC_URL || !CONTRACT_ADDRESS) {
-  console.error('Error: Missing required environment variables. Please check your .env file.');
+  console.error('Error: Missing required environment variables.');
+  console.error('Please ensure RPC_URL (or ETH_NODE_URL) and VITE_CONTRACT_ADDRESS are set in your .env file.');
   process.exit(1);
 }
 

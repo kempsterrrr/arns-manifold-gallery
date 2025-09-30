@@ -59,15 +59,12 @@ DEPLOY_KEY=$(base64 -i wallet.json) npx permaweb-deploy --arns-name [your-arns-n
 Required in `.env`:
 - `ARNS_NAME`: Your ArNS domain name (e.g., "mygallery")
 - `DEPLOY_KEY`: Base64-encoded Arweave wallet JSON (see AR.IO permaweb-deploy docs)
-- `ETH_NODE_URL`: RPC URL for the blockchain network (typically Ethereum/Base)
-- `CONTRACT_ADDRESS`: Manifold collection contract address
+- `ETH_NODE_URL` or `RPC_URL`: RPC URL for the blockchain network (typically Ethereum/Base)
+- `VITE_CONTRACT_ADDRESS`: Manifold collection contract address (exposed to frontend)
+- `VITE_CHAIN`: Chain identifier for marketplace links (exposed to frontend)
 
 Optional (for ASCII art extraction):
 - `ETHERSCAN_API_KEY`: For contract source fetching across all supported chains (Ethereum, Base, Polygon, Optimism, Arbitrum, etc.)
-
-Build-time variables (prefixed with `VITE_`):
-- `VITE_CONTRACT_ADDRESS`: Used in frontend for contract links
-- `VITE_CHAIN`: Chain identifier for marketplace links
 
 ## Project Structure
 
