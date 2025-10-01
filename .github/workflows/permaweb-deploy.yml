@@ -41,9 +41,6 @@ jobs:
           VITE_CONTRACT_ADDRESS: ${{ secrets.VITE_CONTRACT_ADDRESS }}
           VITE_CHAIN: ${{ secrets.VITE_CHAIN }}
 
-      - name: Create wallet.json
-        run: echo '${{ secrets.DEPLOY_KEY }}' | base64 -d > wallet.json
-
       - name: Deploy to Arweave
         run: |
           if [ -n "${{ secrets.UNDER_NAME }}" ]; then
