@@ -21,14 +21,39 @@ jobs:
 
       - run: pnpm install
 
-      - name: Create wallet.json
-        run: echo '${{ secrets.DEPLOY_KEY }}' | base64 -d > wallet.json
-
-      - name: Deploy to Arweave
-        run: pnpm run deploy:arns --arns_name ${{ secrets.ARNS_NAME }} --deploy_key ${{ secrets.DEPLOY_KEY }}
+      - name: Fetch NFT metadata
+        run: pnpm run get-metadata
         env:
           RPC_URL: ${{ secrets.RPC_URL }}
           VITE_CONTRACT_ADDRESS: ${{ secrets.VITE_CONTRACT_ADDRESS }}
+
+      - name: Extract ASCII art from contract
+        run: pnpm run extract-ascii
+        env:
+          VITE_CONTRACT_ADDRESS: ${{ secrets.VITE_CONTRACT_ADDRESS }}
+          VITE_CHAIN: ${{ secrets.VITE_CHAIN }}
+          ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
+
+      - name: Build application
+        run: pnpm run build
+        env:
+          VITE_CONTRACT_ADDRESS: ${{ secrets.VITE_CONTRACT_ADDRESS }}
+          VITE_CHAIN: ${{ secrets.VITE_CHAIN }}
+
+      - name: Create wallet.json
+        run: echo '${{ secrets.DEPLOY_KEY }}' | base64 -d > wallet.json
+
+      - name: Deploy to Arweave (with undername)
+        if: ${{ secrets.UNDER_NAME != '' }}
+        run: npx permaweb-deploy --arns-name ${{ secrets.ARNS_NAME }} --undername ${{ secrets.UNDER_NAME }}
+        env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
           ARNS_NAME: ${{ secrets.ARNS_NAME }}
-          WALLET_JSON: ${{ secrets.WALLET_JSON }}
+          UNDER_NAME: ${{ secrets.UNDER_NAME }}
+
+      - name: Deploy to Arweave (without undername)
+        if: ${{ secrets.UNDER_NAME == '' }}
+        run: npx permaweb-deploy --arns-name ${{ secrets.ARNS_NAME }}
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          ARNS_NAME: ${{ secrets.ARNS_NAME }}
