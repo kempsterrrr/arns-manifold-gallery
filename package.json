@@ -12,7 +12,7 @@
     "extract-ascii": "node src/scripts/extract-ascii-art.js",
     "extract-ascii-simple": "node src/scripts/extract-ascii-art-simple.js",
     "extract-ascii-simple:demo": "node src/scripts/extract-ascii-art-simple.js --demo",
-    "deploy:arns": "permaweb-deploy --arns-name $ARNS_NAME --deploy_key $DEPLOY_KEY"
+    "deploy:arns": "pnpm run get-metadata && pnpm run extract-ascii && permaweb-deploy --arns-name $ARNS_NAME --deploy_key $DEPLOY_KEY"
   },
   "dependencies": {
     "@ar.io/sdk": "3.14.0",
