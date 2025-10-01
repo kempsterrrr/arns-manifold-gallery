@@ -43,17 +43,16 @@ jobs:
       - name: Create wallet.json
         run: echo '${{ secrets.DEPLOY_KEY }}' | base64 -d > wallet.json
 
-      - name: Deploy to Arweave (with undername)
-        if: ${{ secrets.UNDER_NAME != '' }}
-        run: npx permaweb-deploy --arns-name ${{ secrets.ARNS_NAME }} --undername ${{ secrets.UNDER_NAME }}
+      - name: Deploy to Arweave
+        run: |
+          if [ -n "${{ secrets.UNDER_NAME }}" ]; then
+            echo "Deploying with undername..."
+            npx permaweb-deploy --arns-name ${{ secrets.ARNS_NAME }} --undername ${{ secrets.UNDER_NAME }}
+          else
+            echo "Deploying without undername..."
+            npx permaweb-deploy --arns-name ${{ secrets.ARNS_NAME }}
+          fi
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
           ARNS_NAME: ${{ secrets.ARNS_NAME }}
           UNDER_NAME: ${{ secrets.UNDER_NAME }}
-
-      - name: Deploy to Arweave (without undername)
-        if: ${{ secrets.UNDER_NAME == '' }}
-        run: npx permaweb-deploy --arns-name ${{ secrets.ARNS_NAME }}
-        env:
-          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-          ARNS_NAME: ${{ secrets.ARNS_NAME }}
