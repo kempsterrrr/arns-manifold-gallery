@@ -43,12 +43,14 @@ jobs:
 
       - name: Deploy to Arweave
         run: |
-          if [ -n "${{ secrets.UNDER_NAME }}" ]; then
-            echo "Deploying with undername..."
-            npx permaweb-deploy --arns-name ${{ secrets.ARNS_NAME }} --undername ${{ secrets.UNDER_NAME }}
+          echo "Checking DEPLOY_KEY length: ${#DEPLOY_KEY}"
+          echo "ARNS_NAME: $ARNS_NAME"
+          if [ -n "$UNDER_NAME" ]; then
+            echo "Deploying with undername: $UNDER_NAME"
+            npx permaweb-deploy --arns-name $ARNS_NAME --undername $UNDER_NAME --deploy-key "$DEPLOY_KEY"
           else
             echo "Deploying without undername..."
-            npx permaweb-deploy --arns-name ${{ secrets.ARNS_NAME }}
+            npx permaweb-deploy --arns-name $ARNS_NAME --deploy-key "$DEPLOY_KEY"
           fi
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
