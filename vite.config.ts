@@ -37,8 +37,9 @@ export default defineConfig({
     rollupOptions: {
       external: [],
       onwarn(warning, warn) {
-        // Ignore warnings about unresolved imports for unenv
-        if (warning.message.includes('unenv/node/process') || warning.message.includes('unenv/node/buffer')) {
+        // Ignore all warnings about unresolved imports for unenv polyfills
+        // These are polyfilled by vite-plugin-node-polyfills
+        if (warning.message.includes('unenv/')) {
           return;
         }
         warn(warning);
