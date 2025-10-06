@@ -57,7 +57,9 @@ async function fetchContractSource(contractAddress, chain) {
     });
 
     if (response.data.status !== '1') {
-      throw new Error(`Etherscan API error: ${response.data.message || 'Unknown error'}`);
+      console.error(`Etherscan API Response:`, JSON.stringify(response.data, null, 2));
+      console.error(`Using API Key: ${apiKey.substring(0, 8)}...`);
+      throw new Error(`Etherscan API error: ${response.data.message || response.data.result || 'Unknown error'}`);
     }
 
     const sourceData = response.data.result[0];
