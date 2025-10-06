@@ -38,7 +38,7 @@ export default defineConfig({
       external: [],
       onwarn(warning, warn) {
         // Ignore warnings about unresolved imports for unenv
-        if (warning.message.includes('unenv/node/process')) {
+        if (warning.message.includes('unenv/node/process') || warning.message.includes('unenv/node/buffer')) {
           return;
         }
         warn(warning);
