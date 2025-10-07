@@ -14,7 +14,7 @@ export default defineConfig({
       globals: {
         Buffer: true,
         global: true,
-        process: false, // Disable process polyfill to avoid conflicts
+        process: true,
       },
       // Whether to polyfill `global`
       protocolImports: true,
