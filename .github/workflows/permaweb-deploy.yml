@@ -47,10 +47,10 @@ jobs:
           echo "ARNS_NAME: $ARNS_NAME"
           if [ -n "$UNDER_NAME" ]; then
             echo "Deploying with undername: $UNDER_NAME"
-            npx permaweb-deploy --arns-name $ARNS_NAME --undername $UNDER_NAME --deploy-key "$DEPLOY_KEY"
+            npx permaweb-deploy --arns-name $ARNS_NAME --undername $UNDER_NAME --deploy-key "$DEPLOY_KEY --ttl-seconds 60"
           else
             echo "Deploying without undername..."
-            npx permaweb-deploy --arns-name $ARNS_NAME --deploy-key "$DEPLOY_KEY"
+            npx permaweb-deploy --arns-name $ARNS_NAME --deploy-key "$DEPLOY_KEY --ttl-seconds 60"
           fi
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}

@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "get-metadata": "node src/scripts/get-metadata.js",
     "extract-ascii": "node src/scripts/extract-ascii-art.js",
-    "deploy:arns": "permaweb-deploy --arns-name $ARNS_NAME --deploy_key $DEPLOY_KEY"
+    "deploy:arns": "permaweb-deploy --arns-name $ARNS_NAME --deploy_key $DEPLOY_KEY --ttl-seconds 60"
   },
   "dependencies": {
     "@ar.io/sdk": "3.14.0",
